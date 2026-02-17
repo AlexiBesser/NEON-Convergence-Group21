@@ -383,6 +383,40 @@ Fig_8_sw_gw_sr_time_fixed
 
 ggsave("Figures/Fig_8_Ground_Surface_Sr_time_fixed.pdf", plot = last_plot())
 
+#' Figure 9
+#' SUVA254 across sites
+swc_SUVA_cleaned$type <- "Surface Water"
+gwc_SUVA_cleaned$type <- "Groundwater"
+suva <- rbind(swc_SUVA_cleaned, gwc_SUVA_cleaned)
+suva_254 <- suva %>%
+  filter(wavelength == 254)
+
+#' With outliers
+Fig_9_sw_gw_suva_254 <- ggplot(suva, aes(x = siteID, y = SUVA,
+                                         color = type)) +
+  geom_boxplot() +
+  theme_linedraw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        axis.title.x = element_blank()) +
+  ylab("SUVA at 254 nm")
+
+Fig_9_sw_gw_suva_254
+
+ggsave("Figures/Fig_9_Ground_Surface_SUVA_254.pdf", plot = last_plot())
+
+#' Truncated axes
+Fig_9_sw_gw_suva_254_truncated <- ggplot(suva, aes(x = siteID, y = SUVA,
+                                         color = type)) +
+  geom_boxplot() +
+  theme_linedraw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        axis.title.x = element_blank()) +
+  ylab("SUVA at 254 nm") +
+  ylim(0, 10)
+
+Fig_9_sw_gw_suva_254_truncated
+
+ggsave("Figures/Fig_9_Ground_Surface_SUVA_254_trunc.pdf", plot = last_plot())
 
 #' Other data visualization plots for surface water
 ggplot(swc_suva_slopes, aes(Sr, fill = siteID)) +
